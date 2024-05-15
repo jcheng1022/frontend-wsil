@@ -1,0 +1,43 @@
+{
+  "name": "frontend-distance-notifier",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/styled": "^11.11.5",
+    "@googlemaps/js-api-loader": "^1.16.6",
+    "@mantine/carousel": "^7.9.1",
+    "@mantine/core": "^7.9.1",
+    "@mantine/dates": "^7.9.1",
+    "@mantine/form": "^7.9.1",
+    "@mantine/hooks": "^7.9.1",
+    "@mantine/modals": "^7.9.1",
+    "@mantine/notifications": "^7.9.1",
+    "@mantine/nprogress": "^7.9.1",
+    "@react-google-maps/api": "^2.19.3",
+    "@supabase/ssr": "^0.3.0",
+    "@supabase/supabase-js": "^2.43.1",
+    "@tanstack/react-query": "^5.36.0",
+    "axios": "^1.6.8",
+    "dayjs": "^1.11.11",
+    "embla-carousel-react": "^8.0.4",
+    "firebase": "^10.12.0",
+    "lucide-react": "^0.378.0",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-google-autocomplete": "^2.7.3"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8.4.38",
+    "postcss-preset-mantine": "^1.15.0",
+    "postcss-simple-vars": "^7.0.1"
+  }
+}

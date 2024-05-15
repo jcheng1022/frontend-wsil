@@ -1,0 +1,24 @@
+
+.container {
+    /*height: 200px;*/
+    max-height: 80px;
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 24px;
+
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    /*color: blue;*/
+}
+
+.title:hover {
+    color:red;
+    pointer: red;
+}
+
+.titleEnding {
+    color: them;
+}
