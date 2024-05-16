@@ -20,9 +20,6 @@ export const useUserIsLoggedIn = () => {
 
 export const useCurrentUser = ( props = {})  => {
 
-
-
-
     const queryKey = ['currentUser', props];
 
     const uid = auth.currentUser?.uid
@@ -34,6 +31,24 @@ export const useCurrentUser = ( props = {})  => {
         enabled: !!uid && APIClient.isReady,
         retry: 5,
         queryFn: () => APIClient.api.get(`/user/me`, { params: props})
+    })
+
+
+}
+
+
+export const useUserRuns = ( userId,  props = {})  => {
+
+    const queryKey = ['runs', userId, props];
+
+
+
+    return useQuery({
+        queryKey,
+        ...defaultQueryProps,
+        enabled: !!userId,
+        retry: 5,
+        queryFn: () => APIClient.api.get(`/distance/runs`, { params: props})
     })
 
 

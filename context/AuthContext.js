@@ -15,7 +15,6 @@ export const AuthContextProvider = ({
 
     const [loading, setLoading] = useState(true);
 
-    console.log(auth.currentUser, '23232', auth)
     const logOut = async () => {
         await auth.signOut()
 
@@ -45,6 +44,16 @@ export const AuthContextProvider = ({
         logOut,
         initializingAuth: loading
     }
+
+    function requestPermission() {
+        console.log('Requesting permission...');
+        Notification.requestPermission().then((permission) => {
+            if (permission === 'granted') {
+                console.log('Notification permission granted.')
+            }
+        })};
+
+    requestPermission();
     return (
         <AuthContext.Provider value={settings}>
 

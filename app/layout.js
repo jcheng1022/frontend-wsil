@@ -12,6 +12,9 @@ import '@mantine/notifications/styles.css';
 import '@mantine/dates/styles.css';
 
 
+import { io } from "socket.io-client";
+
+export const socket = io("http://localhost:8080");
 
 export const metadata = {
   title: 'My Mantine app',
@@ -21,6 +24,8 @@ export const metadata = {
 export default function RootLayout({
                                      children,
                                    }) {
+
+
   return (
       <html lang="en">
       <head>

@@ -90,7 +90,7 @@ function CreateNewSearch(props) {
                 message: 'Search success',
                 icon: <CheckIcon  />,
                 loading: false,
-                autoClose: 2000,
+                autoClose: 3000,
             });
             setSearchData(data)
             open();
@@ -102,35 +102,44 @@ function CreateNewSearch(props) {
                 message: e.message || 'Something went wrong  :(',
                 icon: <X  />,
                 loading: false,
-                autoClose: 2000,
+                autoClose: 4000,
             });
         })
     }
 
     const handleSchedule = async (values) => {
         console.log(values, 2)
-        // const id = notifications.show({
-        //     loading: true,
-        //     title: 'Loading your data',
-        //     message: 'Data will be loaded in 3 seconds, you cannot close this yet',
-        //     autoClose: false,
-        //     withCloseButton: false,
-        // });
+        const id = notifications.show({
+            loading: true,
+            title: 'Sit tight!',
+            message: 'We are scheduling your monitoring job. This may take a few seconds.',
+            autoClose: false,
+            withCloseButton: false,
+        });
 
 
 
         return APIClient.api.post(`/distance/schedule`, values).then(data => {
-            // notifications.update({
-            //     id,
-            //     color: 'teal',
-            //     title: 'Success',
-            //     message: 'Search success',
-            //     icon: <CheckIcon  />,
-            //     loading: false,
-            //     autoClose: 2000,
-            // });
+            notifications.update({
+                id,
+                color: 'teal',
+                title: 'Success',
+                message: 'Monitoring job scheduled successfully',
+                icon: <CheckIcon  />,
+                loading: false,
+                autoClose: 2000,
+            });
         }).catch(e => {
           console.log(e.message || 'Something went wrong')
+            notifications.update({
+                id,
+                color: 'red',
+                title: 'Error',
+                message: e.message || 'Something went wrong  :(',
+                icon: <X  />,
+                loading: false,
+                autoClose: 2000,
+            });
         })
     }
     return (
