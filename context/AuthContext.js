@@ -10,6 +10,7 @@ import APIClient from '../services/api'
 import {toast, ToastContainer} from "react-toastify";
 import useFcmToken from "@/hooks/useFcmToken";
 import {useQueryClient} from "@tanstack/react-query";
+import {useCurrentUser} from "@/hooks/user.hooks";
 
 export const AuthContext = createContext({});
 
@@ -20,6 +21,7 @@ export const AuthContextProvider = ({
                                         children,
                                     }) => {
     const { fcmToken,notificationPermissionStatus } = useFcmToken();
+    const {data: user} =useCurrentUser();
 
     const [loading, setLoading] = useState(true);
     const client = useQueryClient();
@@ -92,7 +94,9 @@ export const AuthContextProvider = ({
 
     useEffect(() => {
 
-        requestPermission();
+        if (user) {
+            requestPermission();
+        }
 
     },[])
     useEffect(() => {
