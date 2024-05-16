@@ -21,6 +21,7 @@ export const AuthContextProvider = ({
     const { fcmToken,notificationPermissionStatus } = useFcmToken();
 
     const [loading, setLoading] = useState(true);
+    const client = useQueryClient();
 
 
     const logOut = async () => {
@@ -76,6 +77,7 @@ export const AuthContextProvider = ({
 
                         await APIClient.api.post(`/user/fcm`, {token}).then(() => {
                             console.log('Token sent to server')
+                            client.refetchQueries({queryKey: ['currentUser']})
                         })
                     }).catch((e) => console.log(`Failed to get token: ${e}`))
 
