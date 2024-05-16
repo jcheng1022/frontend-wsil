@@ -10,6 +10,8 @@ import Providers from "@/app/providers";
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/dates/styles.css';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 export const metadata = {
