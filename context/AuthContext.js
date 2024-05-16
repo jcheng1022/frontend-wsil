@@ -4,8 +4,7 @@ import {createContext, useContext, useEffect, useState} from "react";
 import {auth, firebaseApp} from "@/lib/firebase/firebase";
 import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {io} from "socket.io-client";
-import {getMessaging, getToken} from "firebase/messaging";
-import { getMessaging, onMessage } from "firebase/messaging";
+import {getMessaging, getToken, onMessage} from "firebase/messaging";
 
 import APIClient from '../services/api'
 
