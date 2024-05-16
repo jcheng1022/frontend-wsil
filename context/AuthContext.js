@@ -98,7 +98,7 @@ export const AuthContextProvider = ({
             requestPermission();
         }
 
-    },[])
+    },[user])
     useEffect(() => {
 
         const messaging = getMessaging(firebaseApp);
