@@ -70,7 +70,7 @@ export const AuthContextProvider = ({
 
                 getToken(messaging, {vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY})
                     .then(async (token) => {
-                        console.log(`Got Token`)
+                        console.log(`Got Token`, token)
 
                         // await APIClient.
                     }).catch((e) => console.log(`Failed to get token: ${e}`))
