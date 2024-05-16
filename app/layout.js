@@ -13,8 +13,8 @@ import '@mantine/dates/styles.css';
 
 
 export const metadata = {
-  title: 'My Mantine app',
-  description: 'I have followed setup instructions carefully',
+  title: 'WSIL',
+  description: 'When Should I leave',
 };
 
 export default function RootLayout({
