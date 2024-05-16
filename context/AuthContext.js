@@ -7,6 +7,8 @@ import {io} from "socket.io-client";
 import {getMessaging, getToken, onMessage} from "firebase/messaging";
 
 import APIClient from '../services/api'
+import {toast, ToastContainer} from "react-toastify";
+import useFcmToken from "@/hooks/useFcmToken";
 
 export const AuthContext = createContext({});
 
@@ -16,6 +18,7 @@ export const useAuthContext = () => useContext(AuthContext);
 export const AuthContextProvider = ({
                                         children,
                                     }) => {
+    const { fcmToken,notificationPermissionStatus } = useFcmToken();
 
     const [loading, setLoading] = useState(true);
 
@@ -86,18 +89,46 @@ export const AuthContextProvider = ({
 
     },[])
     useEffect(() => {
-        const messaging = getMessaging(firebaseApp);
+        if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+            const messaging = getMessaging(firebaseApp);
+            const unsubscribe = onMessage(messaging, (payload) => {
+                console.log('Foreground push notification received:', payload);
+                toast('🦄 Wow so easy!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "light",
+                });
+                // Handle the received push notification while the app is in the foreground
+                // You can display a notification or update the UI based on the payload
+            });
+            return () => {
+                unsubscribe(); // Unsubscribe from the onMessage event
+            };
+        }
+    }, []);
 
-        onMessage(messaging, (payload) => {
-            console.log('Message received. ', payload);
-            // ...
-        });
-    }, [])
 
     return (
         <AuthContext.Provider value={settings}>
 
             {children}
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable={false}
+                pauseOnHover
+                theme="light"
+            />
         </AuthContext.Provider>
     );
 };
