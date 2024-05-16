@@ -78,7 +78,6 @@ export const AuthContextProvider = ({
         })}
 
 
-    const messaging = getMessaging();
 
 
     useEffect(() => {
@@ -87,6 +86,8 @@ export const AuthContextProvider = ({
 
     },[])
     useEffect(() => {
+        const messaging = getMessaging(firebaseApp);
+
         onMessage(messaging, (payload) => {
             console.log('Message received. ', payload);
             // ...
