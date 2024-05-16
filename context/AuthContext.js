@@ -5,6 +5,9 @@ import {auth, firebaseApp} from "@/lib/firebase/firebase";
 import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {io} from "socket.io-client";
 import {getMessaging, getToken} from "firebase/messaging";
+import { getMessaging, onMessage } from "firebase/messaging";
+
+import APIClient from '../services/api'
 
 export const AuthContext = createContext({});
 
@@ -60,20 +63,36 @@ export const AuthContextProvider = ({
         Notification.requestPermission().then((permission) => {
             if (permission === 'granted') {
                 console.log('Notification permission granted.')
+
+                const messaging = getMessaging(firebaseApp);
+
+                getToken(messaging, {vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY})
+                    .then(async (token) => {
+                        console.log(`Got Token`)
+
+                        // await APIClient.
+                    }).catch((e) => console.log(`Failed to get token: ${e}`))
+
             }
         }).catch(e => {
             console.error('Error requesting notification permission: ', e);
         })}
 
+
+    const messaging = getMessaging();
+
+
     useEffect(() => {
-
-        const messaging = getMessaging(firebaseApp);
-
-        getToken(messaging, {vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY}).then(() => console.log(`Got Token`)).catch((e) => console.log(`Failed to get token: ${e}`))
 
         requestPermission();
 
     },[])
+    useEffect(() => {
+        onMessage(messaging, (payload) => {
+            console.log('Message received. ', payload);
+            // ...
+        });
+    }, [])
 
     return (
         <AuthContext.Provider value={settings}>
