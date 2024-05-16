@@ -22,6 +22,7 @@ export const AuthContextProvider = ({
 
     const [loading, setLoading] = useState(true);
 
+
     const logOut = async () => {
         await auth.signOut()
         if (window) {
@@ -89,6 +90,13 @@ export const AuthContextProvider = ({
 
     },[])
     useEffect(() => {
+
+        const messaging = getMessaging(firebaseApp);
+
+        const onForegroundMessage = () =>
+            new Promise((resolve) => onMessage(messaging, (payload) => resolve(payload)));
+
+
         onForegroundMessage()
             .then((payload) => {
                 console.log('Received foreground message: ', payload);
