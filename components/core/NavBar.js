@@ -1,14 +1,13 @@
 'use client';
 
-import classes from './NavBar.module.css'
 import styled from "@emotion/styled";
 import {FlexBox} from "@/components/common";
 import {theme} from "@/styles/themes";
-import {createClient} from "@/utils/supabase/client";
 import {useAuthContext} from "@/context/AuthContext";
 import {useCurrentUser, useUserIsLoggedIn} from "@/hooks/user.hooks";
 import {Button} from "@mantine/core";
 import {useRouter} from "next/navigation";
+
 export default function NavBar() {
     // const supabase = createClient();
     const router = useRouter();

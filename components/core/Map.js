@@ -1,5 +1,6 @@
+'use client';
 
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import {GoogleMap, Marker, useJsApiLoader} from '@react-google-maps/api';
 
 const containerStyle = {
@@ -36,26 +37,6 @@ function MyComponent() {
     const onUnmount = useCallback(function callback(map) {
         setMap(null)
     }, [])
-
-    // useEffect(() => {
-    //     if (navigator.geolocation) {
-    //         navigator.geolocation.getCurrentPosition(
-    //             (position) => {
-    //                 const { latitude, longitude } = position.coords;
-    //                 setCenter({ lat: latitude, lng: longitude });
-    //                 if (map) {
-    //                     map.setCenter({ lat: latitude, lng: longitude });
-    //                 }
-    //             },
-    //             (error) => {
-    //                 console.error("Error getting user location: ", error);
-    //             }
-    //         );
-    //     } else {
-    //         console.error("Geolocation is not supported by this browser.");
-    //     }
-    // }, [map]);
-
 
     return isLoaded ? (
         <GoogleMap

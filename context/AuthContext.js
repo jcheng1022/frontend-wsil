@@ -1,8 +1,10 @@
 'use client'
 
-import {createContext, useContext, useState} from "react";
-import {auth} from "@/lib/firebase/firebase";
+import {createContext, useContext, useEffect, useState} from "react";
+import {auth, firebaseApp} from "@/lib/firebase/firebase";
 import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import {io} from "socket.io-client";
+import {getMessaging, getToken} from "firebase/messaging";
 
 export const AuthContext = createContext({});
 
@@ -17,8 +19,10 @@ export const AuthContextProvider = ({
 
     const logOut = async () => {
         await auth.signOut()
+        if (window) {
+            return window.location.href = window.location.href
 
-        return window.location.href = window.location.href
+        }
 
     }
 
@@ -38,12 +42,18 @@ export const AuthContextProvider = ({
 
         })}
 
+    const socket = io("http://localhost:8080");
+
+
     const settings = {
         handleSignIn,
+        socket,
         // user: currentUser,
         logOut,
         initializingAuth: loading
     }
+
+
 
     function requestPermission() {
         console.log('Requesting permission...');
@@ -51,9 +61,20 @@ export const AuthContextProvider = ({
             if (permission === 'granted') {
                 console.log('Notification permission granted.')
             }
-        })};
+        }).catch(e => {
+            console.error('Error requesting notification permission: ', e);
+        })}
 
-    requestPermission();
+    useEffect(() => {
+
+        const messaging = getMessaging(firebaseApp);
+
+        getToken(messaging, {vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY}).then(() => console.log(`Got Token`)).catch((e) => console.log(`Failed to get token: ${e}`))
+
+        requestPermission();
+
+    },[])
+
     return (
         <AuthContext.Provider value={settings}>
 

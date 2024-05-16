@@ -1,5 +1,5 @@
 // import styled from "@emotion/styled";
-import { Text, Title} from "@mantine/core";
+import {Text, Title} from "@mantine/core";
 
 const Test = () => {
     return (

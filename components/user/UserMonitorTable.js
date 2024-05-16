@@ -7,7 +7,7 @@ import {useCurrentUser, useUserRuns} from "@/hooks/user.hooks";
 import {Badge, Table, Tooltip} from "@mantine/core";
 import dayjs from "dayjs";
 import {FlexBox} from "@/components/common";
-import {CirclePause, Eye, OctagonXIcon, PauseIcon, Pencil, PencilIcon, SquareArrowUpRightIcon} from "lucide-react";
+import {CirclePause, SquareArrowUpRightIcon} from "lucide-react";
 
 function UserMonitorTable(props) {
     const {data: user} = useCurrentUser();

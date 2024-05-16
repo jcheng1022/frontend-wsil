@@ -1,7 +1,7 @@
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
 
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import {ColorSchemeScript, MantineProvider} from '@mantine/core';
 import NavBar from "@/components/core/NavBar";
 import {Notifications} from "@mantine/notifications";
 import {AuthContextProvider} from "@/context/AuthContext";
@@ -11,10 +11,6 @@ import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/dates/styles.css';
 
-
-import { io } from "socket.io-client";
-
-export const socket = io("http://localhost:8080");
 
 export const metadata = {
   title: 'My Mantine app',

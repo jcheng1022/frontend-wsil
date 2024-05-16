@@ -6,12 +6,15 @@ import UserBanner from "@/components/user/UserBanner";
 import {Gap} from "@/components/common";
 import UserMonitorTable from "@/components/user/UserMonitorTable";
 import {theme} from '@/styles/themes'
-import {socket} from "@/app/layout";
+import {useAuthContext} from "@/context/AuthContext";
+
 function ViewUser(props) {
+    const { socket } = useAuthContext();
+
 
     useEffect(() => {
         socket.on("connect", () => {
-            console.log('connected ', socket.id); // x8WIv7-mJelg7on_ALbx
+            console.log('connected ', socket.id);
         });
 
         socket.on("trigger", (arg) => {

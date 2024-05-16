@@ -4,7 +4,7 @@
 import styled from "@emotion/styled";
 import {FlexBox} from "@/components/common";
 import {theme} from "@/styles/themes";
-import {Button, UnstyledButton} from "@mantine/core";
+import {Button} from "@mantine/core";
 import {useRouter} from "next/navigation";
 
 export default function Hero() {

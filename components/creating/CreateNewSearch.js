@@ -4,15 +4,14 @@ import styled from "@emotion/styled";
 import {FlexBox, Gap} from "@/components/common";
 import {useForm} from "@mantine/form";
 import {Button, Drawer, NumberInput, Select, TextInput} from "@mantine/core";
-import CustomMap from "@/components/core/Map";
 import APIClient from '@/services/api'
 import {useDisclosure} from "@mantine/hooks";
 import {useState} from "react";
-import { DateTimePicker } from '@mantine/dates';
+import {DateTimePicker} from '@mantine/dates';
 import {theme} from "@/styles/themes";
 import {CheckIcon, Clock, Home, Locate, Milestone, X} from "lucide-react";
 import {notifications} from "@mantine/notifications";
-import Autocomplete, {usePlacesWidget} from "react-google-autocomplete";
+import {usePlacesWidget} from "react-google-autocomplete";
 
 
 const isTesting = true;
