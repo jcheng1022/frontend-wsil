@@ -1,7 +1,7 @@
 'use client'
 
 import {createContext, useContext, useEffect, useState} from "react";
-import {auth, firebaseApp} from "@/lib/firebase/firebase";
+import {auth, firebaseApp, onForegroundMessage} from "@/lib/firebase/firebase";
 import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {io} from "socket.io-client";
 import {getMessaging, getToken, onMessage} from "firebase/messaging";
@@ -89,27 +89,16 @@ export const AuthContextProvider = ({
 
     },[])
     useEffect(() => {
-        if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-            const messaging = getMessaging(firebaseApp);
-            const unsubscribe = onMessage(messaging, (payload) => {
-                console.log('Foreground push notification received:', payload);
-                toast('🦄 Wow so easy!', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: false,
-                    progress: undefined,
-                    theme: "light",
-                });
-                // Handle the received push notification while the app is in the foreground
-                // You can display a notification or update the UI based on the payload
-            });
-            return () => {
-                unsubscribe(); // Unsubscribe from the onMessage event
-            };
-        }
+        onForegroundMessage()
+            .then((payload) => {
+                console.log('Received foreground message: ', payload);
+                const { notification: { title, body } } = payload;
+                toast(<div>
+                    <div> {title}</div>
+                    <div> {body}</div>
+                </div>);
+            })
+            .catch(err => console.log('An error occured while retrieving foreground message. ', err));
     }, []);
 
 
