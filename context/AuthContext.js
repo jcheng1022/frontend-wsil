@@ -42,7 +42,7 @@ export const AuthContextProvider = ({
 
         })}
 
-    const socket = io("http://localhost:8080");
+    const socket = io(process.env.NEXT_PUBLIC_API_BASE_URL);
 
 
     const settings = {
