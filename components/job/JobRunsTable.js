@@ -2,7 +2,7 @@
 import React, {useMemo, useState, useEffect} from 'react';
 import styled from "@emotion/styled";
 import {useCurrentUser, useRunDataById} from "@/hooks/user.hooks";
-import {, Table, } from "@mantine/core";
+import { Table } from "@mantine/core";
 import dayjs from "dayjs";
 import {FlexBox} from "@/components/common";
 import {CheckIcon,  X} from "lucide-react";
