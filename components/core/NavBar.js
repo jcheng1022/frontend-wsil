@@ -9,6 +9,7 @@ import {Button} from "@mantine/core";
 import {useRouter} from "next/navigation";
 
 export default function NavBar() {
+    console.log('NAV RERENDER')
     // const supabase = createClient();
     const router = useRouter();
     const { data: user, isFetching, isLoading,  } = useCurrentUser();

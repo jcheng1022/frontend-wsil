@@ -80,7 +80,7 @@ export const AuthContextProvider = ({
 
                         await APIClient.api.post(`/user/fcm`, {token}).then(() => {
                             console.log('Token sent to server')
-                            client.refetchQueries({queryKey: ['currentUser']})
+                            // client.refetchQueries({queryKey: ['currentUser']})
                         })
                     }).catch((e) => console.log(`Failed to get token: ${e}`))
 
@@ -92,13 +92,13 @@ export const AuthContextProvider = ({
 
 
 
-    useEffect(() => {
-
-        if (user) {
-            requestPermission();
-        }
-
-    },[user])
+    // useEffect(() => {
+    //
+    //     if (user) {
+    //         requestPermission();
+    //     }
+    //
+    // },[user])
     useEffect(() => {
 
         const messaging = getMessaging(firebaseApp);
