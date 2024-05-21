@@ -53,3 +53,38 @@ export const useUserRuns = ( userId,  props = {})  => {
 
 
 }
+
+
+export const useRunDataById = ( isLoggedIn, runId,  props = {})  => {
+
+    const queryKey = ['run', runId, props];
+
+
+
+    return useQuery({
+        queryKey,
+        ...defaultQueryProps,
+        enabled: !!isLoggedIn,
+        retry: 5,
+        queryFn: () => APIClient.api.get(`/distance/run/${runId}/data`, { params: props})
+    })
+
+
+}
+
+export const useRunById = ( isLoggedIn, runId,  props = {})  => {
+
+    const queryKey = ['run', 'data', runId, props];
+
+
+
+    return useQuery({
+        queryKey,
+        ...defaultQueryProps,
+        enabled: !!isLoggedIn,
+        retry: 5,
+        queryFn: () => APIClient.api.get(`/distance/run/${runId}`, { params: props})
+    })
+
+
+}

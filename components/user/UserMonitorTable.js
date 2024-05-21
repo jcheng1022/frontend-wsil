@@ -8,10 +8,12 @@ import {Badge, Table, Tooltip} from "@mantine/core";
 import dayjs from "dayjs";
 import {FlexBox} from "@/components/common";
 import {CirclePause, SquareArrowUpRightIcon} from "lucide-react";
+import {useRouter} from "next/navigation";
 
 function UserMonitorTable(props) {
     const {data: user} = useCurrentUser();
     const {data: runs} = useUserRuns(user?.id);
+    const router = useRouter();
 
     const rows = runs?.map((element, index) => {
         let status;
@@ -38,7 +40,7 @@ function UserMonitorTable(props) {
             )
         }
         return (
-            <Table.Tr key={element.id}>
+            <Table.Tr key={element.id} onClick={() => router.push(`/user/${user.firebaseUuid}/job/${element.id}`)}>
                 <Table.Td>{index + 1}</Table.Td>
 
                 <Table.Td>{element?.search?.origination}</Table.Td>
@@ -80,7 +82,7 @@ function UserMonitorTable(props) {
 
             </Table.Tr>
         )
-    });
+    })
     return (
         <Container>
             <Table striped highlightOnHover withTableBorder withColumnBorders stickyHeader stickyHeaderOffset={60}>

@@ -11,16 +11,16 @@ import {useAuthContext} from "@/context/AuthContext";
 function ViewUser(props) {
     const { socket } = useAuthContext();
 
-
-    useEffect(() => {
-        socket.on("connect", () => {
-            console.log('connected ', socket.id);
-        });
-
-        socket.on("trigger", (arg) => {
-            console.log(arg, 'from server'); // world
-        });
-    }, [])
+    //
+    // useEffect(() => {
+    //     socket.on("connect", () => {
+    //         console.log('connected ', socket.id);
+    //     });
+    //
+    //     socket.on("trigger", (arg) => {
+    //         console.log(arg, 'from server'); // world
+    //     });
+    // }, [])
     return (
         <Container>
             <UserBanner />

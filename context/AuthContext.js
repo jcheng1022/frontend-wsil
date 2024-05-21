@@ -52,12 +52,12 @@ export const AuthContextProvider = ({
 
         })}
 
-    const socket = io('https://backend-wsil-production.up.railway.app');
+    // const socket = io('https://backend-wsil-production.up.railway.app');
 
 
     const settings = {
         handleSignIn,
-        socket,
+        // socket,
         // user: currentUser,
         logOut,
         initializingAuth: loading
