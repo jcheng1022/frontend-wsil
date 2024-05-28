@@ -10,7 +10,7 @@ import {
     MapPin,
     MapPinned,
     MoreVertical,
-    PencilLine,
+    PencilLine, Play,
     Trash
 } from "lucide-react";
 import dayjs from "dayjs";
@@ -28,14 +28,16 @@ function JobHeader({jobId}) {
 
     const {data:user} = useCurrentUser()
 
-    const {data: job} = useRunById(!!user?.id, jobId);
+    const {data: job, refetch} = useRunById(!!user?.id, jobId);
     const [opened, { open, close }] = useDisclosure(false);
     const [actionType, setActionType] = useState(null)
 
     const handleAction =(type) =>  () => {
         setActionType(type)
         open();
+
     }
+
 
     return (
         <Container>
@@ -55,14 +57,22 @@ function JobHeader({jobId}) {
                             {/*        Edit*/}
                             {/*    </span>*/}
                             {/*</Menu.Item>*/}
-                            <Menu.Item leftSection={<CirclePause color={'grey'}/>}>
-                                <span style={{color: 'grey'}}>
-                                    Pause
-                                </span>
-                            </Menu.Item>
+                            {job?.status === 'PAUSED' ? (
+                                <Menu.Item leftSection={<Play color={'green'}/>}>
+        <span style={{color: 'green'}}>
+            Resume
+        </span>
+                                </Menu.Item>
+                            ) : job?.status === 'ACTIVE' ? (
+                                <Menu.Item leftSection={<CirclePause color={'grey'}/>}>
+        <span style={{color: 'grey'}}>
+            Pause
+        </span>
+                                </Menu.Item>
+                            ) : null}
                             <Menu.Item leftSection={<CircleX color={'red'}/>}>
                                 <span style={{color: 'red'}}>
-                                    Danger
+                                    Delete
                                 </span>
                             </Menu.Item>
 
@@ -72,7 +82,12 @@ function JobHeader({jobId}) {
 
                 <FlexBox className={'browser-actions'} justify={'flex-end'} gap={12}>
                     {/*<Button color={theme.lightOrange}> Edit </Button>*/}
-                    <Button color={theme.jetGrey} onClick={handleAction('PAUSE')}> Pause </Button>
+                    {job?.status === 'PAUSED' ? (
+                        <Button color={theme.primaryBlue} onClick={handleAction('RESUME')}> Resume </Button>
+                    ) : job?.status === 'ACTIVE' ? (
+                        <Button color={theme.jetGrey} onClick={handleAction('PAUSE')}> Pause </Button>
+
+                    ): null}
                     <Button color={'red'} onClick={handleAction('DELETE')}> Delete </Button>
                 </FlexBox>
             </FlexBox>
@@ -95,7 +110,7 @@ function JobHeader({jobId}) {
                     </FlexBox>
                 </Tooltip>
             </FlexBox>
-            <JobManageActionModal opened={opened} onClose={close} type={actionType} jobId={jobId} userId={user?.id} />
+            <JobManageActionModal opened={opened} refetch={refetch} onClose={close} type={actionType} jobId={jobId} userId={user?.id} />
         </Container>
     );
 }

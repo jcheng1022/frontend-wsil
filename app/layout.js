@@ -1,5 +1,6 @@
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
+import './globals.css'
 
 import {ColorSchemeScript, MantineProvider} from '@mantine/core';
 import NavBar from "@/components/core/NavBar";
@@ -33,14 +34,16 @@ export default function RootLayout({
       </head>
       <body>
       <Providers>
+          <MantineProvider>
+
           <AuthContextProvider>
-              <MantineProvider>
                   <Notifications />
 
                   <NavBar/>
                   {children}
-              </MantineProvider>
           </AuthContextProvider>
+          </MantineProvider>
+
       </Providers>
       </body>
       </html>

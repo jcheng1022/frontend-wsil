@@ -5,9 +5,8 @@ import {FlexBox} from "@/components/common";
 import {theme} from "@/styles/themes";
 import APIClient from '/services/api'
 import {notifications} from "@mantine/notifications";
-function JobManageActionModal({opened, onClose, type = 'PAUSE', jobId, userId }) {
+function JobManageActionModal({opened, refetch, onClose, type = 'PAUSE', jobId, userId }) {
 
-    console.log(type, '2323')
 
     const handleConfirm =async () => {
         return APIClient.api.patch(`/distance/run/${jobId}/status`, {}, {
@@ -15,6 +14,7 @@ function JobManageActionModal({opened, onClose, type = 'PAUSE', jobId, userId })
                 status: type
             }
         }).then(() => {
+            refetch();
             onClose();
         }).catch((e) => {
             notifications.show({
@@ -26,9 +26,27 @@ function JobManageActionModal({opened, onClose, type = 'PAUSE', jobId, userId })
         })
     }
 
-    const title = type === 'PAUSE' ? 'Pause Job' : 'Delete Job';
-    const confirmText = type === 'PAUSE' ? `Are you sure you want to pause this monitoring job?` : `Are you sure you want to delete this monitoring job?`;
-    const disclaimerText = type === 'PAUSE' ? `This job will be paused and will not be monitored until you resume it.` : `This job will be deleted and cannot be recovered.`;
+    let title = ''
+    let confirmText = '';
+    let disclaimerText = '';
+    let btnColor = ''
+
+    if (type === 'PAUSE') {
+        title = 'Pause Job';
+        confirmText = 'Are you sure you want to pause this monitoring job?';
+        disclaimerText = 'This job will be paused and will not be monitored until you resume it.';
+        btnColor = theme.primaryBlue
+    } else if (type === 'DELETE') {
+        title = 'Delete Job';
+        confirmText = 'Are you sure you want to delete this monitoring job?';
+        disclaimerText = 'This job will be deleted and cannot be recovered.';
+        btnColor = 'red'
+    } else if (type === 'RESUME') {
+title = 'Resume Job';
+        confirmText = 'Are you sure you want to resume this monitoring job?';
+        disclaimerText = 'This job will be resumed and will be monitored.';
+        btnColor = theme.secondaryOrange
+    }
     return (
         <ModalContainer  overlayProps={{
             backgroundOpacity: 0.55,
@@ -47,7 +65,7 @@ function JobManageActionModal({opened, onClose, type = 'PAUSE', jobId, userId })
                 <Button color={'grey'}>
                     Cancel
                 </Button>
-                <Button color={type === 'PAUSE' ? theme.primaryBlue : 'red'} onClick={handleConfirm}>
+                <Button color={btnColor} onClick={handleConfirm}>
                     Confirm
                 </Button>
             </FlexBox>

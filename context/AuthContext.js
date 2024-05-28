@@ -11,6 +11,7 @@ import {toast, ToastContainer} from "react-toastify";
 import useFcmToken from "@/hooks/useFcmToken";
 import {useQueryClient} from "@tanstack/react-query";
 import {useCurrentUser} from "@/hooks/user.hooks";
+import ChangeUsernameModal from "@/components/ChangeUsernameModal";
 
 export const AuthContext = createContext({});
 
@@ -22,6 +23,13 @@ export const AuthContextProvider = ({
                                     }) => {
     const { fcmToken,notificationPermissionStatus } = useFcmToken();
     const {data: user} =useCurrentUser();
+    const [openChangeUsername, setOpenChangeUsername] = useState(false)
+
+    useEffect(() => {
+        if (user && user?.isInitialUsername) {
+            setOpenChangeUsername(true)
+        }
+    }, [user])
 
     const [loading, setLoading] = useState(true);
     const client = useQueryClient();
@@ -124,6 +132,7 @@ export const AuthContextProvider = ({
         <AuthContext.Provider value={settings}>
 
             {children}
+            <ChangeUsernameModal opened={openChangeUsername} onClose={() => setOpenChangeUsername(false)}/>
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
