@@ -58,19 +58,19 @@ function JobHeader({jobId}) {
                             {/*    </span>*/}
                             {/*</Menu.Item>*/}
                             {job?.status === 'PAUSED' ? (
-                                <Menu.Item leftSection={<Play color={'green'}/>}>
+                                <Menu.Item onClick={handleAction('RESUME')} leftSection={<Play color={'green'}/>}>
         <span style={{color: 'green'}}>
             Resume
         </span>
                                 </Menu.Item>
                             ) : job?.status === 'ACTIVE' ? (
-                                <Menu.Item leftSection={<CirclePause color={'grey'}/>}>
+                                <Menu.Item onClick={handleAction('PAUSE')} leftSection={<CirclePause color={'grey'}/>}>
         <span style={{color: 'grey'}}>
             Pause
         </span>
                                 </Menu.Item>
                             ) : null}
-                            <Menu.Item leftSection={<CircleX color={'red'}/>}>
+                            <Menu.Item onClick={handleAction('DELETE')} leftSection={<CircleX color={'red'}/>}>
                                 <span style={{color: 'red'}}>
                                     Delete
                                 </span>
