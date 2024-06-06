@@ -6,9 +6,22 @@ import {FlexBox} from "@/components/common";
 import {theme} from "@/styles/themes";
 import {Button} from "@mantine/core";
 import {useRouter} from "next/navigation";
+import {useCurrentUser} from "@/hooks/user.hooks";
+import {useAuthContext} from "@/context/AuthContext";
 
 export default function Hero() {
     const router = useRouter()
+    const {data: user} = useCurrentUser();
+    const {handleSignIn } = useAuthContext()
+
+
+    const handleGetStarted = () => {
+        if (user) {
+            router.push('/new')
+        } else {
+            handleSignIn();
+        }
+    }
     return (
         <Container justify={'center'} align={'center'} direction={'column'}>
             {/*<div className={'hero-title'}> When Should I Leave ?</div>*/}
@@ -19,7 +32,7 @@ export default function Hero() {
                 <div className={'hero-cta-text'}>{"So we'll do it for you"}</div>
             <Button
                 className={'test-btn'}
-                onClick={() => router.push('/new')}
+                onClick={handleGetStarted}
                 style={{
                     color: 'white',
                     height: 75,
