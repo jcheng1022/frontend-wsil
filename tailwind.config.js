@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    colors: {
+      primaryOrange: "#ff9966"
+    }
   },
   plugins: [],
 }

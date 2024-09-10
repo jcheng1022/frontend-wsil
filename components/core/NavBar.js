@@ -33,7 +33,7 @@ export default function NavBar() {
         if (userUid && user && !fetchingUser) {
 
             return (
-                <div className={'username'} onClick={() => router.push(`/user/${user?.firebaseUuid}`)}  > {user?.username ? user.username : 'No name yet!'} </div>
+                <div className={'font-bold cursor-pointer font-bold hover:text-primaryOrange'} onClick={() => router.push(`/user/${user?.firebaseUuid}`)}  > {user?.username ? user.username : 'No name yet!'} </div>
 
             )
         }

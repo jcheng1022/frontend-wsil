@@ -12,11 +12,14 @@ import {theme} from "@/styles/themes";
 import {CheckIcon, Clock, Home, Locate, Milestone, X} from "lucide-react";
 import {notifications} from "@mantine/notifications";
 import {usePlacesWidget} from "react-google-autocomplete";
+import {useRouter} from "next/navigation";
+import {useCurrentUser} from "@/hooks/user.hooks";
 
 
 const isTesting = true;
 
 function CreateNewSearch(props) {
+    const {data: user} = useCurrentUser()
     const [opened, { open, close }] = useDisclosure(false);
     const { ref: originationInputRef } = usePlacesWidget({
         apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
@@ -26,6 +29,7 @@ function CreateNewSearch(props) {
         onPlaceSelected: (place) => form.setFieldValue('origination', place.formatted_address)
 
     })
+    const router = useRouter()
     const { ref: destinationInputRef } = usePlacesWidget({
         apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
         options: {
@@ -69,8 +73,7 @@ function CreateNewSearch(props) {
 
     const handleSubmit = async (values, e) => {
         e.preventDefault();
-        console.log(e)
-        console.log(values, 2)
+
         const id = notifications.show({
             loading: true,
             title: 'Loading your data',
@@ -107,7 +110,7 @@ function CreateNewSearch(props) {
     }
 
     const handleSchedule = async (values) => {
-        console.log(values, 2)
+
         const id = notifications.show({
             loading: true,
             title: 'Sit tight!',
@@ -128,6 +131,10 @@ function CreateNewSearch(props) {
                 loading: false,
                 autoClose: 2000,
             });
+
+            close();
+            router.push(`/user/${user?.firebaseUuid}`)
+
         }).catch(e => {
           console.log(e.message || 'Something went wrong')
             notifications.update({
@@ -184,10 +191,10 @@ function CreateNewSearch(props) {
                </form>
            </FormContainer>
 
-            <MapContainer isTesting={isTesting}>
-
-              {/*<CustomMap/>*/}
-            </MapContainer>
+            {/*<MapContainer isTesting={isTesting}>*/}
+            {/*    */}
+            {/*  /!*<CustomMap/>*!/*/}
+            {/*</MapContainer>*/}
             { !!opened && (
                 <StyledDrawer
                     closeOnClickOutside={false}
