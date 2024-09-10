@@ -40,7 +40,7 @@ function UserMonitorTable(props) {
             )
         }
         return (
-            <Table.Tr key={element.id} onClick={() => router.push(`/user/${user.firebaseUuid}/job/${element.id}`)}>
+            <Table.Tr style={{cursor: "pointer"}} key={element.id} onClick={() => router.push(`/user/${user.firebaseUuid}/job/${element.id}`)}>
                 <Table.Td>{index + 1}</Table.Td>
 
                 <Table.Td>{element?.search?.origination}</Table.Td>

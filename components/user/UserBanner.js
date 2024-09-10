@@ -17,7 +17,7 @@ export default UserBanner;
 
 const Container = styled.div`
   padding: 24px;
-  height: 200px;
+  height: 100px;
   // background: linear-gradient(to left, ${theme.primaryOrange}, ${theme.secondaryOrange});
   
   .user-username {

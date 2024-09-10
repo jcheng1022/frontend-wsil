@@ -37,6 +37,7 @@ export default ViewUser;
 
 const Container = styled.div`
   background: linear-gradient(to top, ${theme.primaryOrange}, ${theme.secondaryOrange});
+  min-height: 100vh;
   //height: 100vh;
 
 `
