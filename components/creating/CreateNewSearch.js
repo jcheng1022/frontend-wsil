@@ -14,12 +14,14 @@ import {notifications} from "@mantine/notifications";
 import {usePlacesWidget} from "react-google-autocomplete";
 import {useRouter} from "next/navigation";
 import {useCurrentUser} from "@/hooks/user.hooks";
+import {useQueryClient} from "@tanstack/react-query";
 
 
 const isTesting = true;
 
 function CreateNewSearch(props) {
     const {data: user} = useCurrentUser()
+    const client = useQueryClient()
     const [opened, { open, close }] = useDisclosure(false);
     const { ref: originationInputRef } = usePlacesWidget({
         apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
@@ -133,7 +135,9 @@ function CreateNewSearch(props) {
             });
 
             close();
-            router.push(`/user/${user?.firebaseUuid}`)
+            client.refetchQueries({
+                queryKey: ['runs', user?.id, {}]
+            }).then(() => router.push(`/user/${user?.firebaseUuid}`))
 
         }).catch(e => {
           console.log(e.message || 'Something went wrong')

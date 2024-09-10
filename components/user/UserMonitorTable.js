@@ -114,6 +114,7 @@ export default UserMonitorTable;
 const Container = styled.div`
   padding: 24px;
   
+  
   .mantine-Table-table {
     border-radius: 12px;
   }
