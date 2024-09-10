@@ -9,11 +9,14 @@ import dayjs from "dayjs";
 import {FlexBox} from "@/components/common";
 import {CirclePause, SquareArrowUpRightIcon} from "lucide-react";
 import {useRouter} from "next/navigation";
+import {useAuthContext} from "@/context/AuthContext";
 
 function UserMonitorTable(props) {
     const {data: user} = useCurrentUser();
     const {data: runs} = useUserRuns(user?.id);
     const router = useRouter();
+    const {handleSignIn } = useAuthContext()
+
 
     const rows = runs?.map((element, index) => {
         let status;
@@ -85,26 +88,34 @@ function UserMonitorTable(props) {
     })
     return (
         <Container>
-            <Table striped highlightOnHover withTableBorder withColumnBorders stickyHeader stickyHeaderOffset={60}>
-                <Table.Thead>
-                    <Table.Tr>
-                        <Table.Th>#</Table.Th>
-                        <Table.Th>Origination</Table.Th>
-                        <Table.Th>Destination</Table.Th>
-                        {/*<Table.Th>Mode</Table.Th>*/}
-                        <Table.Th>Target Minutes</Table.Th>
 
-                        <Table.Th>Frequency</Table.Th>
-                        <Table.Th>Start Date</Table.Th>
-                        <Table.Th>End Date</Table.Th>
-                        <Table.Th>Status</Table.Th>
-                        <Table.Th></Table.Th>
+            {runs?.length === 0 ? <EmptyContainer>
+
+                <div className={'empty-title'}> {`You don't have any runs yet!`}</div>
+                <button className={'get-started-btn'} onClick={() => router.push('/new')}> Create one now </button>
+            </EmptyContainer> :(
+                <Table striped highlightOnHover withTableBorder withColumnBorders stickyHeader stickyHeaderOffset={60}>
+                    <Table.Thead>
+                        <Table.Tr>
+                            <Table.Th>#</Table.Th>
+                            <Table.Th>Origination</Table.Th>
+                            <Table.Th>Destination</Table.Th>
+                            {/*<Table.Th>Mode</Table.Th>*/}
+                            <Table.Th>Target Minutes</Table.Th>
+
+                            <Table.Th>Frequency</Table.Th>
+                            <Table.Th>Start Date</Table.Th>
+                            <Table.Th>End Date</Table.Th>
+                            <Table.Th>Status</Table.Th>
+                            <Table.Th></Table.Th>
 
 
-                    </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody>{rows}</Table.Tbody>
-            </Table>
+                        </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>{rows}</Table.Tbody>
+                </Table>
+            ) }
+
         </Container>
     );
 }
@@ -137,4 +148,30 @@ const Container = styled.div`
   // .mantine-Table-tr:nth-of-type(1) {
   //   background-color: ${theme.jetGrey};
   // }
+`
+
+
+const EmptyContainer = styled(FlexBox)`
+  flex-direction: column;
+  
+  .empty-title {
+    font-size: 32px;
+    font-weight: 700;
+    
+  }
+  
+  .get-started-btn {
+padding: 12px 30px;
+    background-color: ${theme.lightOrange};
+    color: white;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 24px;
+    border: 2px solid white;
+    
+    :hover {
+        background-color: ${theme.secondaryOrange};
+    }
+  }
 `
